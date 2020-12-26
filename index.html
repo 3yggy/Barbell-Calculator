@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <script src='bbc.js'></script>
+    </head>
+    <body style="overflow-y: hidden;">       
+        <div class='tableContainer'>  
+            <table class ='thisTable'>
+                <thead id='lovelyThread'> 
+                    <tr>
+                        <th>Weight</th>
+
+                        <th>Count</th>
+                    </tr>
+                    
+                    <tr  id='adderComumn'>
+                        <th class="adderField" ><input id='inWeight' class='adder' type="text" ng-model=""></th>
+
+                        <th class="adderField"><input maxlength="10" id='inCount' class='adder' type="number" ng-model=""></th>
+
+                        <th><div class='adderConfirm'> <button id='btnAdd' >add</button></div></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </body>
+</html>
+
+<style>
+    .thisTable {
+    border: 1px solid black;
+    position: relative;
+    max-height: 100%;
+    }
+
+    .entry{
+        border: 1px solid black;
+    }
+
+    .adder{
+        margin: 10px;
+        border: 3px dotted black;
+    }
+
+    .adderConfirm{
+        margin: 10px;
+    }
+
+    .tableContainer{
+        height: 100%;
+        position:absolute;
+        overflow-y: scroll;
+        padding: 0;
+    }
+
+</style>
