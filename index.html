@@ -24,18 +24,20 @@
                 </thead>
             </table>
         </div>
-        <div class='displayContainer'>
-            <div class = 'ctrlPnl'>
-                <input id='sldrLift' type="range" style="width: 75%; margin-top: 2%;">
-                <input id='nmbrLift' type="number" style="width: 7%;">
-                <div style="display:inline-block"><label><input id='checkSym'type="checkbox">Pretty</label></div>
-            </div>
-            <div if='plateDisplay' class='plateDisplay'>
-                <div class='barbell'>
+        <div class='displayContainer' >
+            <div id='displayContainer' hidden=true>
+                <div class = 'ctrlPnl' id='ctrlPnl'>
+                    <input id='sldrLift' type="range" style="width: 60%; margin-top: 2%;">
+                    <input id='nmbrLift' type="number" style="width: 16%;">
+                    <div style="display:inline-block"><label><input id='checkSym'type="checkbox">Pretty</label></div>
+                </div>
+                <div id='plateDisplay' class='plateDisplay'>
+                    <div class='barbell'>
 
+
+                    </div>
 
                 </div>
-
             </div>
           <!--  <div class ='inputPanel'>
                 <span >Lift:</span> <input type="number" id='inLift'  style="float: right; width: 80px;"><br><br>

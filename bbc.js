@@ -9,6 +9,7 @@ window.onload = function() {
     let checkSym = document.getElementById('checkSym');
     let sldrLift = document.getElementById('sldrLift');
     let nmbrLift = document.getElementById('nmbrLift');
+    let plateDisplay = document.getElementById('plateDisplay');
     
     btnAdd.onclick = function(){
         AddBabe(inWeight.value,inCount.value);
@@ -31,7 +32,7 @@ window.onload = function() {
             nmbr = 0;
 
         if(nmbr > sldrLift.max){
-            nmbr = sldrLift.max;
+            nmbr = Math.round(sldrLift.max*100)/100;
             nmbrLift.value = nmbr;
         }
         sldrLift.value = nmbr;
@@ -52,6 +53,8 @@ function SeekLift(){
     if(lift){
         console.log('lift: '+lift);
         console.log('from: '+combos[lift]);
+        
+        plateDisplay.textContent = 'lift: '+lift+' | '+ combos[lift];
     }
 }
 
@@ -103,12 +106,26 @@ function Calculate(plates){
 
 var combos;
 function PreparationUpdate(){
-    combos = Calculate(GetBabies()); 
-    let keys = Object.keys(combos);
-    const max = keys[keys.length-1];
-    sldrLift.max = max;
-    sldrLift.step =(max %1).toFixed(2);
-    console.log(max);
+
+    babies = GetBabies();
+
+    ctrl =  document.getElementById('displayContainer');
+
+    if(babies.length){
+
+        ctrl.hidden= false;
+
+        combos = Calculate(babies); 
+
+        let keys = Object.keys(combos);
+        const max = keys[keys.length-1];
+        sldrLift.max = max;
+        sldrLift.step =(max %1).toFixed(2);
+        console.log(max);
+    }else{
+        ctrl.hidden= true;
+    }
+    
 }
 
 function GetBabies(){
@@ -125,7 +142,7 @@ function GetBabies(){
 }
 
 function AddBabe(weight, count){
-    weight = parseFloat(weight).toFixed(2);
+    weight = Math.round(parseFloat(weight)*100)/100;
     count = parseInt(count)
     if(weight && count){
 
