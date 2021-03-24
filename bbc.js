@@ -12,8 +12,8 @@ window.onload = function() {
     let plateDisplay = document.getElementById('plateDisplay');
     
     btnAdd.onclick = function(){
-        AddBabe(inWeight.value,inCount.value);
-        PreparationUpdate();
+        if(AddBabe(inWeight.value,inCount.value))
+            PreparationUpdate();
     }
 
     btnClear.onclick = function(){
@@ -59,18 +59,15 @@ window.onload = function() {
 }
 
 const maxWeight = 1000000;
-const maxCount = 40;
+const maxCount = 28;
 
 function SeekLift(){
     if(combos){
         var tar = parseFloat(sldrLift.value);
-        //console.log('want:',tar);
         const lift = NearestLift(tar,Object.keys(combos))
 
         if(lift){
-            //console.log('lift: '+lift);
-            //console.log('from: '+combos[lift]);
-            
+         
             var CookieDate = new Date;
             CookieDate.setFullYear(CookieDate.getFullYear() +10);
             document.cookie = 'target='+tar+'; expires=' + CookieDate.toGMTString() + ';';
@@ -87,11 +84,10 @@ function SeekLift(){
                     var weight = display[i];
                     plate.textContent = weight;
                     plate.style.maxWidth = weight*2+60+'px';
-                    plate.style.height = '26px';
-                    plate.style.bottom = (i*26)+'px';
+                    plate.style.minHeight = '26px';
+                    //plate.style.bottom = (i*26)+'px';
                     plateDisplay.appendChild(plate);
                 }
-
             }else
                 txt = 'No plates'
 
@@ -120,10 +116,10 @@ function Calculate(plates){
         var sum = 0;
         var subset = [];
         for (var j = 0; j < plates.length; j++)
-        if (i & (1 << j)){
-            subset.push(plates[j]);
-            sum+=plates[j];
-        }
+            if (i & (1 << j)){
+                subset.push(plates[j]);
+                sum+=plates[j];
+            }
         result[Math.round(sum * 100) / 100] = subset;
     }
     return result;
@@ -159,7 +155,6 @@ function PreparationUpdate(){
     }
 }
 
-
 function GetBabiesWithMen(){
     var babies = [];
     var men = ""
@@ -182,17 +177,14 @@ function AddBabe(weight, count){
     weight = Math.round(parseFloat(Math.abs(weight))*100)/100;
     count = parseInt(count)
 
-
     if(weight && count){
 
         if(weight>maxWeight)
             weight = maxWeight;
-        //if(count>maxCount)
-          //  count = maxCount;
-
+        
         if(count+lastLen>maxCount){
             alert('Si tienes mas de ['+maxCount+'], platos, porque no dame un poco, senor grande?!');
-            return;
+            return false;
         }
 
         let tr = document.createElement('tr');
@@ -219,5 +211,7 @@ function AddBabe(weight, count){
         tr.appendChild(thClose);
 
         lovelyThread.appendChild(tr);
+
+        return true;
     }
 }
