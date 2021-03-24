@@ -10,8 +10,8 @@
                 <thead id='lovelyThread'> 
                     <tr>
                         <th>Weight</th>
-                        <th>Count</th>
-                        <th><button id='btnClear' >⟳</button></th>
+                        <th>Sets</th>
+                        <th><button id='btnClear' >X</button></th>
                     </tr>
                     
                     <tr  id='adderComumn'>
@@ -29,34 +29,19 @@
                 <div class = 'ctrlPnl' id='ctrlPnl'>
                     <input id='sldrLift' type="range" style="width: 60%; margin-top: 2%;">
                     <input id='nmbrLift' type="number" style="width: 16%;">
-                    <div style="display:inline-block"><label><input id='checkSym'type="checkbox">Pretty</label></div>
+                </div>
+                <div id='reader'>
+                  
                 </div>
                 <div id='plateDisplay' class='plateDisplay'>
-                    <div class='barbell'>
+                   
 
-
-                    </div>
+                </div>
+                <div class='barbell'>
 
                 </div>
             </div>
-          <!--  <div class ='inputPanel'>
-                <span >Lift:</span> <input type="number" id='inLift'  style="float: right; width: 80px;"><br><br>
-               <label > <input type="checkbox" id='checkSym' checked >
-                <span  style="float: left">bello</span><span> </span> 
-            </label>
-            <button id = 'btnCalc' style="float: right;">Calculate</button>
-
-            <hr>
-
-            <div class = 'platesList'>
-
-            </div>
-
-            </div>
-       
-            <div class= 'barbellDisplay'>
-
-            </div>-->
+            
         </div>
     </body>
 </html>
@@ -119,19 +104,27 @@
 
     }
 
-    .plateDisplay{
-       
-    }
-
-    .plateListItem{
-
-    }
-    
     .barbell{
+        margin: 0 auto;
+        bottom: 0;
+        height:100%;
+        background-color: lightsteelblue;
+        width: 20px;
+    }
+
+    .plateDisplay{
+        margin-top: 100px;
+    }
+    .plate{
         background-color: black;
-        bottom:0;
-        
-        width: 50px;
+        text-align: center;
+        color: gainsboro;
+        font-size: large;
+        margin: 0 auto;
+
+        border-style: ridge;
+        border-color: gray;
+        border-radius: 2px;
     }
 
 }
