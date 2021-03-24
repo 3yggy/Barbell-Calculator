@@ -44,21 +44,22 @@ window.onload = function() {
     }
 
     const cockies = Object.fromEntries(document.cookie.split('; ').map(v=>v.split('=').map(decodeURIComponent)));
-    const plateCockies = cockies['plates'].split('|');
-    const targetCocky = cockies['target'];
-    for (i = 0; i < plateCockies.length; i+=2) {
-        AddBabe(plateCockies[i],plateCockies[i+1])
+    if (cockies){
+        const plateCockies = cockies['plates'].split('|');
+        const targetCocky = cockies['target'];
+        for (i = 0; i < plateCockies.length; i+=2) {
+            AddBabe(plateCockies[i],plateCockies[i+1])
+        }
+        PreparationUpdate();
+
+        nmbrLift.value = targetCocky;
+        sldrLift.value = targetCocky;
+        SeekLift();
     }
-    PreparationUpdate();
-
-    nmbrLift.value = targetCocky;
-    sldrLift.value = targetCocky;
-    SeekLift();
-
 }
 
 const maxWeight = 1000000;
-const maxCount = 30;
+const maxCount = 40;
 
 function SeekLift(){
     if(combos){
