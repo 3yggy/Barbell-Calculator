@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     let btnAdd = document.getElementById('btnAdd');
     let inWeight = document.getElementById('inWeight');
     let inCount = document.getElementById('inCount');
@@ -10,45 +10,45 @@ window.onload = function() {
     let sldrLift = document.getElementById('sldrLift');
     let nmbrLift = document.getElementById('nmbrLift');
     let plateDisplay = document.getElementById('plateDisplay');
-    
-    btnAdd.onclick = function(){
-        if(AddBabe(inWeight.value,inCount.value))
+
+    btnAdd.onclick = function () {
+        if (AddBabe(inWeight.value, inCount.value))
             PreparationUpdate();
     }
 
-    btnClear.onclick = function(){
-        array = Array.from(lovelyThread.children).filter(e=>e.id=='valueMan');
-        for(i in array){     
+    btnClear.onclick = function () {
+        array = Array.from(lovelyThread.children).filter(e => e.id == 'valueMan');
+        for (i in array) {
             let bb = array[i].remove();
         }
         PreparationUpdate();
     }
 
     sldrLift.max = 100;
-    nmbrLift.oninput = function(){
+    nmbrLift.oninput = function () {
         var nmbr = parseFloat(nmbrLift.value);
-        if(!nmbr)
+        if (!nmbr)
             nmbr = 0;
 
-        if(nmbr > sldrLift.max){
-            nmbr = Math.round(sldrLift.max*100)/100;
+        if (nmbr > sldrLift.max) {
+            nmbr = Math.round(sldrLift.max * 100) / 100;
             nmbrLift.value = nmbr;
         }
         sldrLift.value = nmbr;
         SeekLift();
     }
 
-    sldrLift.oninput = function(){
+    sldrLift.oninput = function () {
         nmbrLift.value = sldrLift.value;
         SeekLift();
     }
 
-    const cockies = Object.fromEntries(document.cookie.split('; ').map(v=>v.split('=').map(decodeURIComponent)));
-    if (cockies){
+    const cockies = Object.fromEntries(document.cookie.split('; ').map(v => v.split('=').map(decodeURIComponent)));
+    if (cockies) {
         const plateCockies = cockies['plates'].split('|');
         const targetCocky = cockies['target'];
-        for (i = 0; i < plateCockies.length; i+=2) {
-            AddBabe(plateCockies[i],plateCockies[i+1])
+        for (i = 0; i < plateCockies.length; i += 2) {
+            AddBabe(plateCockies[i], plateCockies[i + 1])
         }
         PreparationUpdate();
 
@@ -61,45 +61,44 @@ window.onload = function() {
 const maxWeight = 1000000;
 const maxCount = 28;
 
-function SeekLift(){
-    if(combos){
+function SeekLift() {
+    if (combos) {
         var tar = parseFloat(sldrLift.value);
-        const lift = NearestLift(tar,Object.keys(combos))
+        const lift = NearestLift(tar, Object.keys(combos))
 
-        if(lift){
-         
+        if (lift) {
+
             var CookieDate = new Date;
-            CookieDate.setFullYear(CookieDate.getFullYear() +10);
-            document.cookie = 'target='+tar+'; expires=' + CookieDate.toGMTString() + ';';
+            CookieDate.setFullYear(CookieDate.getFullYear() + 10);
+            document.cookie = 'target=' + tar + '; expires=' + CookieDate.toGMTString() + ';';
 
             var txt;
             plateDisplay.innerHTML = ""
-            if(lift!='0'){
-                var display = combos[lift].sort(function(a,b){ return a-b;})
+            if (lift != '0') {
+                var display = combos[lift].sort(function (a, b) { return a - b; })
                 txt = display;
-                
-                for(i in display){
+
+                for (i in display) {
                     var plate = document.createElement('div');
                     plate.className = 'plate';
                     var weight = display[i];
                     plate.textContent = weight;
-                    plate.style.maxWidth = weight*2+60+'px';
+                    plate.style.maxWidth = weight * 2 + 60 + 'px';
                     plate.style.minHeight = '26px';
-                    //plate.style.bottom = (i*26)+'px';
                     plateDisplay.appendChild(plate);
                 }
-            }else
+            } else
                 txt = 'No plates'
 
-            reader.innerHTML  = 'Weight: '+lift+'<br>Plates: '+ txt;
+            reader.innerHTML = 'Weight: ' + lift + '<br>Plates: ' + txt;
         }
     }
 }
 
-function NearestLift(x, a){
+function NearestLift(x, a) {
     var lo = -1, hi = a.length;
     while (hi - lo > 1) {
-        var mid = Math.round((lo + hi)/2);
+        var mid = Math.round((lo + hi) / 2);
         if (a[mid] <= x) {
             lo = mid;
         } else {
@@ -110,15 +109,15 @@ function NearestLift(x, a){
     return a[lo];
 }
 
-function Calculate(plates){
-    var result = {0:[]};
+function Calculate(plates) {
+    var result = { 0: [] };
     for (var i = 1; i < (1 << plates.length); i++) {
         var sum = 0;
         var subset = [];
         for (var j = 0; j < plates.length; j++)
-            if (i & (1 << j)){
+            if (i & (1 << j)) {
                 subset.push(plates[j]);
-                sum+=plates[j];
+                sum += plates[j];
             }
         result[Math.round(sum * 100) / 100] = subset;
     }
@@ -126,64 +125,59 @@ function Calculate(plates){
 }
 
 var combos;
-function PreparationUpdate(){
+function PreparationUpdate() {
 
     const BabiesWithMen = GetBabiesWithMen();
     var babies = BabiesWithMen[0]; men = BabiesWithMen[1];
 
     var CookieDate = new Date;
-    CookieDate.setFullYear(CookieDate.getFullYear() +10);
-    document.cookie = 'plates='+men+'; expires=' + CookieDate.toGMTString() + ';';
+    CookieDate.setFullYear(CookieDate.getFullYear() + 10);
+    document.cookie = 'plates=' + men + '; expires=' + CookieDate.toGMTString() + ';';
 
-    let ctrl =  document.getElementById('displayContainer');
+    let ctrl = document.getElementById('displayContainer');
     lastLen = babies.length;
-    if(lastLen){
+    if (lastLen) {
+        ctrl.hidden = false;
 
-        ctrl.hidden= false;
-
-        combos = Calculate(babies); 
+        combos = Calculate(babies);
 
         var keys = Object.keys(combos);
-        const max = keys[keys.length-1];
+        const max = keys[keys.length - 1];
         sldrLift.max = max;
-        sldrLift.step =(max %1).toFixed(2);
-        console.log('possibles: ',keys);
-        console.log('max: ',max);
+        sldrLift.step = (max % 1).toFixed(2);
         SeekLift();
-    }else{
-        ctrl.hidden= true;
+    } else {
+        ctrl.hidden = true;
     }
 }
 
-function GetBabiesWithMen(){
+function GetBabiesWithMen() {
     var babies = [];
     var men = ""
-    array = Array.from(lovelyThread.children).filter(e=>e.id=='valueMan');
-    for(i in array){ 
+    array = Array.from(lovelyThread.children).filter(e => e.id == 'valueMan');
+    for (i in array) {
         let bb = array[i];
         let val = parseFloat(bb.firstChild.textContent);
         let count = bb.children.item(1).textContent;
-        
+
         for (let i = 0; i < count; i++) {
             babies.push(val);
         }
-        men+=val+"|"+count+"|"
+        men += val + "|" + count + "|"
     }
-    return [babies,men];
+    return [babies, men];
 }
 
 var lastLen = 0;
-function AddBabe(weight, count){
-    weight = Math.round(parseFloat(Math.abs(weight))*100)/100;
+function AddBabe(weight, count) {
+    weight = Math.round(parseFloat(Math.abs(weight)) * 100) / 100;
     count = parseInt(count)
 
-    if(weight && count){
-
-        if(weight>maxWeight)
+    if (weight && count) {
+        if (weight > maxWeight)
             weight = maxWeight;
-        
-        if(count+lastLen>maxCount){
-            alert('Si tienes mas de ['+maxCount+'], platos, porque no dame un poco, senor grande?!');
+        if (count + lastLen > maxCount) {
+            alert('Si tienes mas de [' + maxCount + '], platos, porque no dame un poco, senor grande?!');
             return false;
         }
 
@@ -196,20 +190,17 @@ function AddBabe(weight, count){
         let thCount = document.createElement('th');
         thCount.textContent = count;
         thCount.className = 'entry';
-
         let thClose = document.createElement('th');
         let btnClose = document.createElement('button');
         btnClose.textContent = '-';
-        btnClose.onclick = function(){
+        btnClose.onclick = function () {
             tr.remove();
             PreparationUpdate();
         }
         thClose.appendChild(btnClose);
-
         tr.appendChild(thWeight);
         tr.appendChild(thCount);
         tr.appendChild(thClose);
-
         lovelyThread.appendChild(tr);
 
         return true;
